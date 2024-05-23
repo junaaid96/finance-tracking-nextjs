@@ -98,7 +98,7 @@ export default function Profile() {
                 {/* Transactions Histories */}
                 <div className="text-center mt-6">
                     <h2 className="text-2xl font-semibold">
-                        Transactions Histories
+                        Transactions Histories/Log
                     </h2>
                     <table className="table w-full mt-4">
                         <thead>

@@ -23,7 +23,7 @@ export default function Login() {
         }
         console.log(loggedIn);
         if (loggedIn) {
-            router.push("/profile");
+            router.replace("/profile");
         }
     }, [loggedIn, router]);
 
@@ -48,7 +48,7 @@ export default function Login() {
             localStorage.setItem("refresh", response.data.refresh);
             localStorage.setItem("user_id", response.data.user_id);
 
-            router.push("/profile");
+            router.replace("/profile");
             window.location.reload();
         } catch (error) {
             setError(error.response.data.error);
