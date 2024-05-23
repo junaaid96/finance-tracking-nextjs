@@ -5,9 +5,9 @@ Backend Github Link: https://github.com/junaaid96/finance-tracking-drf
 Frontend Live Link: https://finance-tracking-nextjs.vercel.app/
 
 - **Features**:
-  - JWT Token authentication implemented user can get both access and refresh token upon login.
-  - User can track their incomes, expenses by creating, updating, deleting as necessary.
-  - Savings Goal can set and manage accordingly.
-  - All routes are protected no one can see others details and manipulate it.
+  - JWT token authentication is implemented, and users can get both access and refresh tokens upon login.
+  - User can track their incomes and expenses by creating, updating, and deleting them as necessary.
+  - Savings goals can be set and managed accordingly.
+  - All routes are protected; no one can see other details or manipulate them.
 - **Technology Used**:
   - NextJS
