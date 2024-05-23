@@ -5,6 +5,7 @@ import Image from "next/image";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import axios from "axios";
+import { formatCurrency, formatDateTime } from "@/lib/formatUtils";
 
 export default function Profile() {
     const userContext = useUser();
@@ -12,15 +13,6 @@ export default function Profile() {
     const router = useRouter();
     const [transactionsHistories, setTransactionsHistories] = useState([]);
     const [thloading, setThLoading] = useState(true);
-
-    let formattedBalance = 0;
-    if (!loading) {
-        formattedBalance = new Intl.NumberFormat("en-US", {
-            style: "decimal",
-            minimumFractionDigits: 2,
-            maximumFractionDigits: 2,
-        }).format(user.available_balance);
-    }
 
     useEffect(() => {
         document.title = "Finance Tracking | User Profile";
@@ -31,7 +23,7 @@ export default function Profile() {
             metaDescription.content =
                 "Personal Finance Management System. This is the user profile page.";
         }
-        
+
         if (!loggedIn) {
             router.push("/login");
         }
@@ -75,7 +67,8 @@ export default function Profile() {
                         {user.username}
                     </h1>
                     <p className="text-gray-400">
-                        Available balance: ${formattedBalance}
+                        Available balance: $
+                        {formatCurrency(user.available_balance)}
                     </p>
                 </div>
                 <div className="mt-8 text-center">
@@ -120,7 +113,7 @@ export default function Profile() {
                                     <tr key={history.id}>
                                         <td>{history.type}</td>
                                         <td>{history.description}</td>
-                                        <td>{history.date}</td>
+                                        <td>{formatDateTime(history.date)}</td>
                                     </tr>
                                 ))
                             )}

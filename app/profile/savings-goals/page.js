@@ -9,19 +9,19 @@ export default function SavingsGoals() {
     const userContext = useUser();
     const { loading, loggedIn } = userContext;
     const router = useRouter();
+    const [success, setSuccess] = useState("");
+    const [error, setError] = useState("");
     const [savingsGoals, setSavingsGoals] = useState([]);
     const [sgLoading, setSgLoading] = useState(true);
-    const [error, setError] = useState("");
-    const [success, setSuccess] = useState("");
 
     useEffect(() => {
-        document.title = "Finance Tracking | User Profile - Expenses";
+        document.title = "Finance Tracking | User Profile - SavingsGoals";
         const metaDescription = document.querySelector(
             'meta[name="description"]'
         );
         if (metaDescription) {
             metaDescription.content =
-                "Personal Finance Management System. This is the user's expenses page.";
+                "Personal Finance Management System. This is the user's savings goals page.";
         }
 
         if (!loggedIn) {
@@ -89,7 +89,7 @@ export default function SavingsGoals() {
                 })
                 .catch((error) => {
                     console.log(error);
-                    setError(error.response.data.detail);
+                    setError("Something went wrong!");
                 });
         }
     }
@@ -98,9 +98,9 @@ export default function SavingsGoals() {
         e.preventDefault();
         const form = e.target;
         const formData = new FormData(form);
-        const name = formData.get('name');
-        const amount = formData.get('amount');
-        const deadline = formData.get('deadline');
+        const name = formData.get("name");
+        const amount = formData.get("amount");
+        const deadline = formData.get("deadline");
 
         const access_token = localStorage.getItem("access");
 
@@ -122,12 +122,12 @@ export default function SavingsGoals() {
                 .then((response) => {
                     console.log(response);
                     router.refresh();
-                    setSuccess("Savings Goal updated!");
                     document.getElementById(`savings_goal-edit-${id}`).close();
+                    setSuccess("Savings Goal updated!");
                 })
                 .catch((error) => {
                     console.log(error);
-                    setError(error.response.data.detail);
+                    setError("Something went wrong!");
                 });
         }
     }
@@ -149,14 +149,14 @@ export default function SavingsGoals() {
                     console.log(response);
                     router.refresh();
                     // router.prefetch("/profile/savings-goals");
-                    setSuccess("Savings Goal deleted!");
                     document
-                        .getElementById(`savings_goal-delete-${id}`)
-                        .close();
+                    .getElementById(`savings_goal-delete-${id}`)
+                    .close();
+                    setSuccess("Savings Goal deleted!");
                 })
                 .catch((error) => {
                     console.log(error);
-                    setError(error.response.data);
+                    setError("Something went wrong!");
                 });
         }
     }
@@ -335,7 +335,12 @@ export default function SavingsGoals() {
                                                 </button>
                                                 <form
                                                     method="dialog"
-                                                    onSubmit={(e) => handleEditSavingsGoal(e, goal.id)}
+                                                    onSubmit={(e) =>
+                                                        handleEditSavingsGoal(
+                                                            e,
+                                                            goal.id
+                                                        )
+                                                    }
                                                 >
                                                     <label className="label">
                                                         <span className="label-text">
@@ -346,7 +351,9 @@ export default function SavingsGoals() {
                                                             name="name"
                                                             placeholder="Name"
                                                             className="input"
-                                                            defaultValue={goal.name}
+                                                            defaultValue={
+                                                                goal.name
+                                                            }
                                                             required
                                                         />
                                                     </label>
@@ -359,7 +366,9 @@ export default function SavingsGoals() {
                                                             name="amount"
                                                             placeholder="Amount"
                                                             className="input"
-                                                            defaultValue={goal.amount}
+                                                            defaultValue={
+                                                                goal.amount
+                                                            }
                                                             required
                                                         />
                                                     </label>

@@ -3,6 +3,7 @@
 import { useUser } from "@/app/layout";
 import axios from "axios";
 import Image from "next/image";
+import Link from "next/link";
 import { useRouter } from "next/navigation";
 
 export default function NavBar() {
@@ -23,10 +24,10 @@ export default function NavBar() {
     ) : (
         <div className="navbar bg-base-300">
             <div className="flex-1">
-                <a className="btn btn-ghost text-xl">Finance Tracking</a>
+                <Link href={'/'} className="btn btn-ghost text-xl">Finance Tracking</Link>
             </div>
             <div className="flex-none">
-                <div className="dropdown dropdown-end"></div>
+                <div className="dropdown dropdown-end">{user.first_name} {user.last_name}</div>
                 <div className="dropdown dropdown-end">
                     <div
                         tabIndex={0}

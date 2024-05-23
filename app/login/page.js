@@ -21,9 +21,9 @@ export default function Login() {
             metaDescription.content =
                 "Personal Finance management system. This is the user login page.";
         }
-        console.log(loggedIn);
+       
         if (loggedIn) {
-            router.replace("/profile");
+            router.push("/profile");
         }
     }, [loggedIn, router]);
 
@@ -48,7 +48,7 @@ export default function Login() {
             localStorage.setItem("refresh", response.data.refresh);
             localStorage.setItem("user_id", response.data.user_id);
 
-            router.replace("/profile");
+            router.push("/profile");
             window.location.reload();
         } catch (error) {
             setError(error.response.data.error);
