@@ -5,7 +5,6 @@ import "./globals.css";
 import { createContext, useState, useEffect, useContext } from "react";
 import getUser from "@/lib/getUser";
 import Footer from "./components/Footer";
-import Features from "./components/Features";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -41,7 +40,6 @@ export default function RootLayout({ children }) {
             <html lang="en" data-theme="halloween">
                 <body className={inter.className}>
                     {children}
-                    <Features />
                     <Footer />
                 </body>
             </html>
