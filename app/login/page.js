@@ -2,7 +2,7 @@
 
 import axios from "axios";
 import Link from "next/link";
-import { useRouter, redirect } from "next/navigation";
+import { useRouter } from "next/navigation";
 import { useState, useEffect } from "react";
 import { useUser } from "@/app/layout";
 

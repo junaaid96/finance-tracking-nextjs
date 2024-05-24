@@ -56,11 +56,28 @@ export default function Register() {
                 }
             );
             console.log(response);
+            setError("");
             setSuccess("User created successfully. Please login.");
             router.push("/login");
         } catch (error) {
-            setError(error.message);
             console.error(error);
+            setSuccess("");
+            if (error.response && error.response.data) {
+                if (error.response.data.message) {
+                    setError(error.response.data.message);
+                } else if (error.response.data.email) {
+                    setError(error.response.data.email);
+                } else if (error.response.data.password) {
+                    setError(error.response.data.password);
+                } else if (
+                    error.response.data.username &&
+                    error.response.data.username[0]
+                ) {
+                    setError(error.response.data.username[0]);
+                } else {
+                    setError("An unknown error occurred");
+                }
+            }
         }
     }
 
