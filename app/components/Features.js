@@ -2,7 +2,9 @@ export default function Features() {
     return (
         <div className="my-20 text-center">
             <h1 className="text-3xl font-bold mt-10">Features</h1>
-            <p className="mb-10 mt-3">This site is featured with these following things.</p>
+            <p className="mb-10 mt-3">
+                This site is featured with these following things.
+            </p>
 
             <div className="flex flex-wrap gap-6 items-center justify-center">
                 <div className="card w-96 bg-base-100 shadow-xl border border-white">
@@ -44,7 +46,11 @@ export default function Features() {
                 <div className="card w-96 bg-base-100 shadow-xl border border-white">
                     <div className="card-body">
                         <h2 className="card-title">JWT Authentication</h2>
-                        <p>All routes are protected using JWT authentication. Every requests needed access token which will be generated upon every login and expired in 1 Hour.</p>
+                        <p>
+                            All routes are protected using JWT authentication.
+                            Every requests needed access token which will be
+                            generated upon every login and expired in 1 Hour.
+                        </p>
                     </div>
                 </div>
             </div>

@@ -14,21 +14,12 @@ export default function SavingsGoals() {
     const [savingsGoals, setSavingsGoals] = useState([]);
     const [sgLoading, setSgLoading] = useState(true);
 
-    useEffect(() => {
-        document.title = "Finance Tracking | User Profile - SavingsGoals";
-        const metaDescription = document.querySelector(
-            'meta[name="description"]'
-        );
-        if (metaDescription) {
-            metaDescription.content =
-                "Personal Finance Management System. This is the user's savings goals page.";
+    const fetchSavingsGoals = () => {
+        let access_token;
+        // handling localStorage when SSR
+        if (typeof window !== "undefined") {
+            access_token = localStorage.getItem("access");
         }
-
-        if (!loggedIn) {
-            router.push("/login");
-        }
-
-        const access_token = localStorage.getItem("access");
 
         if (access_token) {
             axios
@@ -49,6 +40,23 @@ export default function SavingsGoals() {
                     console.log(error);
                 });
         }
+    };
+
+    useEffect(() => {
+        document.title = "Finance Tracking | User Profile - SavingsGoals";
+        const metaDescription = document.querySelector(
+            'meta[name="description"]'
+        );
+        if (metaDescription) {
+            metaDescription.content =
+                "Personal Finance Management System. This is the user's savings goals page.";
+        }
+
+        if (!loggedIn) {
+            router.push("/login");
+        }
+
+        fetchSavingsGoals();
     }, [loggedIn, router]);
 
     async function handleAddSavingsGoal(e) {
@@ -79,8 +87,10 @@ export default function SavingsGoals() {
                 .then((response) => {
                     console.log(response);
                     // router.prefetch("/profile/savings-goals");
-                    router.refresh();
+                    // router.refresh();
+                    fetchSavingsGoals();
                     document.getElementById("savings_goal-add").close();
+                    setError("");
                     setSuccess("Savings Goal added!");
                     // setTimeout(() => {
                     //     setSuccess("");
@@ -89,7 +99,13 @@ export default function SavingsGoals() {
                 })
                 .catch((error) => {
                     console.log(error);
-                    setError("Something went wrong!");
+                    setSuccess("");
+                    if (error.response.data.message) {
+                        setError(error.response.data.message);
+                    } else {
+                        setError(error.response.data.amount[0]);
+                    }
+                    document.getElementById("savings_goal-add").close();
                 });
         }
     }
@@ -121,13 +137,21 @@ export default function SavingsGoals() {
                 )
                 .then((response) => {
                     console.log(response);
-                    router.refresh();
+                    // router.refresh();
+                    fetchSavingsGoals();
                     document.getElementById(`savings_goal-edit-${id}`).close();
+                    setError("");
                     setSuccess("Savings Goal updated!");
                 })
                 .catch((error) => {
                     console.log(error);
-                    setError("Something went wrong!");
+                    setSuccess("");
+                    if (error.response.data.message) {
+                        setError(error.response.data.message);
+                    } else {
+                        setError(error.response.data.amount[0]);
+                    }
+                    document.getElementById(`savings_goal-edit-${id}`).close();
                 });
         }
     }
@@ -147,15 +171,18 @@ export default function SavingsGoals() {
                 )
                 .then((response) => {
                     console.log(response);
-                    router.refresh();
+                    // router.refresh();
                     // router.prefetch("/profile/savings-goals");
+                    fetchSavingsGoals();
                     document
                         .getElementById(`savings_goal-delete-${id}`)
                         .close();
+                    setError("");
                     setSuccess("Savings Goal deleted!");
                 })
                 .catch((error) => {
                     console.log(error);
+                    setSuccess("");
                     setError("Something went wrong!");
                 });
         }

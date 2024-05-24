@@ -2,7 +2,7 @@
 
 import axios from "axios";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
+import { useRouter, redirect } from "next/navigation";
 import { useState, useEffect } from "react";
 import { useUser } from "@/app/layout";
 
@@ -11,6 +11,7 @@ export default function Login() {
     const [error, setError] = useState("");
     const userContext = useUser();
     const { loggedIn } = userContext;
+    const [loginLoading, setLoginLoading] = useState(false);
 
     useEffect(() => {
         document.title = "Finance Tracking | User Login";
@@ -21,13 +22,14 @@ export default function Login() {
             metaDescription.content =
                 "Personal Finance management system. This is the user login page.";
         }
-       
+
         if (loggedIn) {
             router.push("/profile");
         }
     }, [loggedIn, router]);
 
     async function handleLogin(e) {
+        setLoginLoading(true);
         e.preventDefault();
         const form = e.target;
         const formData = new FormData(form);
@@ -43,15 +45,25 @@ export default function Login() {
                 }
             );
             console.log(response);
+            setLoginLoading(false);
 
+            // storing token
             localStorage.setItem("access", response.data.access);
             localStorage.setItem("refresh", response.data.refresh);
             localStorage.setItem("user_id", response.data.user_id);
+            localStorage.setItem("login_time", new Date().getTime());
 
             router.push("/profile");
             window.location.reload();
+
+            // router
+            //     .replace("/profile", undefined, { shallow: true })
+            //     .then(() => window.location.reload());
+
+            // redirect("/profile");
         } catch (error) {
             setError(error.response.data.error);
+            setLoginLoading(false);
             console.error(error);
         }
     }
@@ -60,6 +72,12 @@ export default function Login() {
         <div className="hero min-h-screen">
             <div className="hero-content flex-col lg:w-1/3">
                 <div className="text-center">
+                    {loginLoading && (
+                        <>
+                            <span className="loading loading-spinner text-primary loading-lg"></span>
+                            <p className="mb-12">Please wait</p>
+                        </>
+                    )}
                     {error && (
                         <div role="alert" className="alert alert-error my-6">
                             <svg

@@ -9,7 +9,9 @@ export default function Home() {
                     <div className="max-w-md">
                         <h1 className="text-5xl font-bold">Finance Tracking</h1>
                         <p className="py-6">
-                            Personal Finance Management System
+                            Personal Finance Management System. Here you can
+                            track your incomes, expenses, manage savings
+                            goals and check your transactions histories.
                         </p>
                         <Link href={"/login"}>
                             <button className="btn btn-primary">

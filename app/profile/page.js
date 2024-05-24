@@ -67,7 +67,7 @@ export default function Profile() {
                         {user.username}
                     </h1>
                     <p className="text-gray-400">
-                        Available balance: $
+                        Available balance:
                         {formatCurrency(user.available_balance)}
                     </p>
                 </div>

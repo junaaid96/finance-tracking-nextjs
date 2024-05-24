@@ -16,21 +16,12 @@ export default function Expenses() {
     const [expenses, setExpenses] = useState([]);
     const [loadingExpenses, setLoadingExpenses] = useState(true);
 
-    useEffect(() => {
-        document.title = "Finance Tracking | User Profile - Expenses";
-        const metaDescription = document.querySelector(
-            'meta[name="description"]'
-        );
-        if (metaDescription) {
-            metaDescription.content =
-                "Personal Finance Management System. This is the user's expense page.";
+    const fetchExpenses = () => {
+        let access_token;
+        // handling localStorage when SSR
+        if (typeof window !== "undefined") {
+            access_token = localStorage.getItem("access");
         }
-
-        if (!loggedIn) {
-            router.push("/login");
-        }
-
-        const access_token = localStorage.getItem("access");
 
         if (access_token) {
             axios
@@ -51,6 +42,23 @@ export default function Expenses() {
                     console.log(error);
                 });
         }
+    };
+
+    useEffect(() => {
+        document.title = "Finance Tracking | User Profile - Expenses";
+        const metaDescription = document.querySelector(
+            'meta[name="description"]'
+        );
+        if (metaDescription) {
+            metaDescription.content =
+                "Personal Finance Management System. This is the user's expense page.";
+        }
+
+        if (!loggedIn) {
+            router.push("/login");
+        }
+
+        fetchExpenses();
 
         getAllCategories().then((response) => {
             setCategories(response);
@@ -86,13 +94,22 @@ export default function Expenses() {
                 )
                 .then((response) => {
                     console.log(response);
-                    router.refresh();
+                    // router.refresh();
+                    // router.prefetch("/profile/expenses");
+                    fetchExpenses();
                     document.getElementById("expense-add").close();
+                    setError("");
                     setSuccess("Expense added!");
                 })
                 .catch((error) => {
                     console.log(error);
-                    setError("Something went wrong!");
+                    setSuccess("");
+                    if (error.response.data.message) {
+                        setError(error.response.data.message);
+                    } else {
+                        setError(error.response.data.amount[0]);
+                    }
+                    document.getElementById("expense-add").close();
                 });
         }
     };
@@ -126,13 +143,21 @@ export default function Expenses() {
                 )
                 .then((response) => {
                     console.log(response);
-                    router.refresh();
+                    // router.refresh();
+                    fetchExpenses();
                     document.getElementById(`expense-edit-${id}`).close();
+                    setError("");
                     setSuccess("Expense updated!");
                 })
                 .catch((error) => {
                     console.log(error);
-                    setError("Something went wrong!");
+                    setSuccess("");
+                    if (error.response.data.message) {
+                        setError(error.response.data.message);
+                    } else {
+                        setError(error.response.data.amount[0]);
+                    }
+                    document.getElementById(`expense-edit-${id}`).close();
                 });
         }
     };
@@ -152,12 +177,15 @@ export default function Expenses() {
                 )
                 .then((response) => {
                     console.log(response);
-                    router.refresh();
+                    // router.refresh();
+                    fetchExpenses();
                     document.getElementById(`expense-delete-${id}`).close();
+                    setError("");
                     setSuccess("Expense deleted!");
                 })
                 .catch((error) => {
                     console.log(error);
+                    setSuccess("");
                     setError("Something went wrong!");
                 });
         }

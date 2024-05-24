@@ -16,21 +16,12 @@ export default function Incomes() {
     const [incomes, setIncomes] = useState([]);
     const [loadingIncomes, setLoadingIncomes] = useState([]);
 
-    useEffect(() => {
-        document.title = "Finance Tracking | User Profile - Incomes";
-        const metaDescription = document.querySelector(
-            'meta[name="description"]'
-        );
-        if (metaDescription) {
-            metaDescription.content =
-                "Personal Finance Management System. This is the user's incomes page.";
+    const fetchIncomes = () => {
+        let access_token;
+        // handling localStorage when SSR
+        if (typeof window !== "undefined") {
+            access_token = localStorage.getItem("access");
         }
-
-        if (!loggedIn) {
-            router.push("/login");
-        }
-
-        const access_token = localStorage.getItem("access");
 
         if (access_token) {
             axios
@@ -51,6 +42,23 @@ export default function Incomes() {
                     console.log(error);
                 });
         }
+    };
+
+    useEffect(() => {
+        document.title = "Finance Tracking | User Profile - Incomes";
+        const metaDescription = document.querySelector(
+            'meta[name="description"]'
+        );
+        if (metaDescription) {
+            metaDescription.content =
+                "Personal Finance Management System. This is the user's incomes page.";
+        }
+
+        if (!loggedIn) {
+            router.push("/login");
+        }
+
+        fetchIncomes();
 
         getAllCategories().then((response) => {
             setCategories(response);
@@ -86,13 +94,21 @@ export default function Incomes() {
                 )
                 .then((response) => {
                     console.log(response);
-                    router.refresh();
+                    // router.refresh();
+                    fetchIncomes();
                     document.getElementById("income-add").close();
+                    setError("");
                     setSuccess("Income added!");
                 })
                 .catch((error) => {
                     console.log(error);
-                    setError("Something went wrong!");
+                    setSuccess("");
+                    if (error.response.data.message) {
+                        setError(error.response.data.message);
+                    } else {
+                        setError(error.response.data.amount[0]);
+                    }
+                    document.getElementById("expense-add").close();
                 });
         }
     };
@@ -126,13 +142,21 @@ export default function Incomes() {
                 )
                 .then((response) => {
                     console.log(response);
-                    router.refresh();
+                    // router.refresh();
+                    fetchIncomes();
                     document.getElementById(`income-edit-${id}`).close();
+                    setError("");
                     setSuccess("Income updated!");
                 })
                 .catch((error) => {
                     console.log(error);
-                    setError("Something went wrong!");
+                    setSuccess("");
+                    if (error.response.data.message) {
+                        setError(error.response.data.message);
+                    } else {
+                        setError(error.response.data.amount[0]);
+                    }
+                    document.getElementById(`income-edit-${id}`).close();
                 });
         }
     };
@@ -152,13 +176,17 @@ export default function Incomes() {
                 )
                 .then((response) => {
                     console.log(response);
-                    router.refresh();
+                    // router.refresh();
+                    fetchIncomes();
                     document.getElementById(`income-delete-${id}`).close();
+                    setError("");
                     setSuccess("Income deleted!");
                 })
                 .catch((error) => {
                     console.log(error);
+                    setSuccess("");
                     setError("Something went wrong!");
+                    document.getElementById(`income-delete-${id}`).close();
                 });
         }
     };
