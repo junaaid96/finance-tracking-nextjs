@@ -289,215 +289,219 @@ export default function Incomes() {
                         </div>
                     </dialog>
                 </div>
-                <table className="table w-full mt-4">
-                    <thead>
-                        <tr>
-                            <th>id</th>
-                            <th>Category</th>
-                            <th>Amount</th>
-                            <th>Description</th>
-                            <th>Date</th>
-                            <th>Action</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {loadingIncomes ? (
+                <div className="overflow-x-auto">
+                    <table className="table w-full mt-4">
+                        <thead>
                             <tr>
-                                <td colSpan="3">
-                                    <span className="loading loading-lg"></span>
-                                </td>
+                                <th>id</th>
+                                <th>Category</th>
+                                <th>Amount</th>
+                                <th>Description</th>
+                                <th>Date</th>
+                                <th>Action</th>
                             </tr>
-                        ) : (
-                            incomes.map((income) => (
-                                <tr key={income.id}>
-                                    <td>{income.id}</td>
-                                    <td>{income.category}</td>
-                                    <td>${income.amount}</td>
-                                    <td>{income.description}</td>
-                                    <td>{income.date}</td>
-                                    <td className="flex gap-2">
-                                        {/* Edit Modal */}
-                                        <button
-                                            className="btn btn-secondary btn-xs"
-                                            onClick={() =>
-                                                document
-                                                    .getElementById(
-                                                        `income-edit-${income.id}`
-                                                    )
-                                                    .showModal()
-                                            }
-                                        >
-                                            Edit
-                                        </button>
-                                        <dialog
-                                            id={`income-edit-${income.id}`}
-                                            className="modal"
-                                        >
-                                            <div className="modal-box">
-                                                <h3 className="font-bold text-lg">
-                                                    Edit a income!
-                                                </h3>
-                                                <button
-                                                    className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2"
-                                                    onClick={() =>
-                                                        document
-                                                            .getElementById(
-                                                                `income-edit-${income.id}`
-                                                            )
-                                                            .close()
-                                                    }
-                                                >
-                                                    ✕
-                                                </button>
-                                                <form
-                                                    method="dialog"
-                                                    onSubmit={(e) =>
-                                                        handleEditIncome(
-                                                            e,
-                                                            income.id
-                                                        )
-                                                    }
-                                                >
-                                                    <label className="label">
-                                                        <span className="label-text">
-                                                            Category
-                                                        </span>
-                                                        <select
-                                                            name="category"
-                                                            className="input input-bordered"
-                                                            required
-                                                        >
-                                                            {categories.map(
-                                                                (category) => (
-                                                                    <option
-                                                                        selected={
-                                                                            category.name ===
-                                                                            income.category
-                                                                        }
-                                                                        key={
-                                                                            category.id
-                                                                        }
-                                                                        value={
-                                                                            category.id
-                                                                        }
-                                                                    >
-                                                                        {
-                                                                            category.name
-                                                                        }
-                                                                    </option>
-                                                                )
-                                                            )}
-                                                        </select>
-                                                    </label>
-                                                    <label className="label">
-                                                        <span className="label-text">
-                                                            Amount
-                                                        </span>
-                                                        <input
-                                                            type="number"
-                                                            name="amount"
-                                                            placeholder="Amount"
-                                                            className="input input-bordered"
-                                                            defaultValue={
-                                                                income.amount
-                                                            }
-                                                            required
-                                                        />
-                                                    </label>
-                                                    <label className="label">
-                                                        <span className="label-text">
-                                                            Description
-                                                        </span>
-                                                        <input
-                                                            type="text"
-                                                            name="description"
-                                                            placeholder="Description"
-                                                            className="input input-bordered"
-                                                            defaultValue={
-                                                                income.description
-                                                            }
-                                                            required
-                                                        />
-                                                    </label>
-                                                    <label className="label">
-                                                        <span className="label-text">
-                                                            Date
-                                                        </span>
-                                                        <input
-                                                            type="date"
-                                                            name="date"
-                                                            className="input input-bordered"
-                                                            placeholder="YYYY-MM-DD"
-                                                            defaultValue={
-                                                                income.date
-                                                            }
-                                                            required
-                                                        />
-                                                    </label>
-                                                    <div className="form-control mt-6">
-                                                        <button className="btn btn-primary">
-                                                            Update
-                                                        </button>
-                                                    </div>
-                                                </form>
-                                            </div>
-                                        </dialog>
-                                        {/* Delete Modal */}
-                                        <button
-                                            className="btn btn-error btn-xs"
-                                            onClick={() =>
-                                                document
-                                                    .getElementById(
-                                                        `income-delete-${income.id}`
-                                                    )
-                                                    .showModal()
-                                            }
-                                        >
-                                            Delete
-                                        </button>
-                                        <dialog
-                                            id={`income-delete-${income.id}`}
-                                            className="modal"
-                                        >
-                                            <div className="modal-box">
-                                                <form method="dialog"></form>
-                                                <h3 className="font-bold text-lg">
-                                                    Are you sure to delete?
-                                                </h3>
-                                                <div className="form-control mt-6">
-                                                    <div className="flex gap-3 items-center justify-end">
-                                                        <button
-                                                            className="btn btn-primary"
-                                                            onClick={() =>
-                                                                handleDeleteIncome(
-                                                                    income.id
-                                                                )
-                                                            }
-                                                        >
-                                                            Yes
-                                                        </button>
-                                                        <button
-                                                            className="btn btn-error"
-                                                            onClick={() =>
-                                                                document
-                                                                    .getElementById(
-                                                                        `income-delete-${income.id}`
-                                                                    )
-                                                                    .close()
-                                                            }
-                                                        >
-                                                            No
-                                                        </button>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </dialog>
+                        </thead>
+                        <tbody>
+                            {loadingIncomes ? (
+                                <tr>
+                                    <td colSpan="3">
+                                        <span className="loading loading-lg"></span>
                                     </td>
                                 </tr>
-                            ))
-                        )}
-                    </tbody>
-                </table>
+                            ) : (
+                                incomes.map((income) => (
+                                    <tr key={income.id}>
+                                        <td>{income.id}</td>
+                                        <td>{income.category}</td>
+                                        <td>${income.amount}</td>
+                                        <td>{income.description}</td>
+                                        <td>{income.date}</td>
+                                        <td className="flex gap-2">
+                                            {/* Edit Modal */}
+                                            <button
+                                                className="btn btn-secondary btn-xs"
+                                                onClick={() =>
+                                                    document
+                                                        .getElementById(
+                                                            `income-edit-${income.id}`
+                                                        )
+                                                        .showModal()
+                                                }
+                                            >
+                                                Edit
+                                            </button>
+                                            <dialog
+                                                id={`income-edit-${income.id}`}
+                                                className="modal"
+                                            >
+                                                <div className="modal-box">
+                                                    <h3 className="font-bold text-lg">
+                                                        Edit a income!
+                                                    </h3>
+                                                    <button
+                                                        className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2"
+                                                        onClick={() =>
+                                                            document
+                                                                .getElementById(
+                                                                    `income-edit-${income.id}`
+                                                                )
+                                                                .close()
+                                                        }
+                                                    >
+                                                        ✕
+                                                    </button>
+                                                    <form
+                                                        method="dialog"
+                                                        onSubmit={(e) =>
+                                                            handleEditIncome(
+                                                                e,
+                                                                income.id
+                                                            )
+                                                        }
+                                                    >
+                                                        <label className="label">
+                                                            <span className="label-text">
+                                                                Category
+                                                            </span>
+                                                            <select
+                                                                name="category"
+                                                                className="input input-bordered"
+                                                                required
+                                                            >
+                                                                {categories.map(
+                                                                    (
+                                                                        category
+                                                                    ) => (
+                                                                        <option
+                                                                            selected={
+                                                                                category.name ===
+                                                                                income.category
+                                                                            }
+                                                                            key={
+                                                                                category.id
+                                                                            }
+                                                                            value={
+                                                                                category.id
+                                                                            }
+                                                                        >
+                                                                            {
+                                                                                category.name
+                                                                            }
+                                                                        </option>
+                                                                    )
+                                                                )}
+                                                            </select>
+                                                        </label>
+                                                        <label className="label">
+                                                            <span className="label-text">
+                                                                Amount
+                                                            </span>
+                                                            <input
+                                                                type="number"
+                                                                name="amount"
+                                                                placeholder="Amount"
+                                                                className="input input-bordered"
+                                                                defaultValue={
+                                                                    income.amount
+                                                                }
+                                                                required
+                                                            />
+                                                        </label>
+                                                        <label className="label">
+                                                            <span className="label-text">
+                                                                Description
+                                                            </span>
+                                                            <input
+                                                                type="text"
+                                                                name="description"
+                                                                placeholder="Description"
+                                                                className="input input-bordered"
+                                                                defaultValue={
+                                                                    income.description
+                                                                }
+                                                                required
+                                                            />
+                                                        </label>
+                                                        <label className="label">
+                                                            <span className="label-text">
+                                                                Date
+                                                            </span>
+                                                            <input
+                                                                type="date"
+                                                                name="date"
+                                                                className="input input-bordered"
+                                                                placeholder="YYYY-MM-DD"
+                                                                defaultValue={
+                                                                    income.date
+                                                                }
+                                                                required
+                                                            />
+                                                        </label>
+                                                        <div className="form-control mt-6">
+                                                            <button className="btn btn-primary">
+                                                                Update
+                                                            </button>
+                                                        </div>
+                                                    </form>
+                                                </div>
+                                            </dialog>
+                                            {/* Delete Modal */}
+                                            <button
+                                                className="btn btn-error btn-xs"
+                                                onClick={() =>
+                                                    document
+                                                        .getElementById(
+                                                            `income-delete-${income.id}`
+                                                        )
+                                                        .showModal()
+                                                }
+                                            >
+                                                Delete
+                                            </button>
+                                            <dialog
+                                                id={`income-delete-${income.id}`}
+                                                className="modal"
+                                            >
+                                                <div className="modal-box">
+                                                    <form method="dialog"></form>
+                                                    <h3 className="font-bold text-lg">
+                                                        Are you sure to delete?
+                                                    </h3>
+                                                    <div className="form-control mt-6">
+                                                        <div className="flex gap-3 items-center justify-end">
+                                                            <button
+                                                                className="btn btn-primary"
+                                                                onClick={() =>
+                                                                    handleDeleteIncome(
+                                                                        income.id
+                                                                    )
+                                                                }
+                                                            >
+                                                                Yes
+                                                            </button>
+                                                            <button
+                                                                className="btn btn-error"
+                                                                onClick={() =>
+                                                                    document
+                                                                        .getElementById(
+                                                                            `income-delete-${income.id}`
+                                                                        )
+                                                                        .close()
+                                                                }
+                                                            >
+                                                                No
+                                                            </button>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </dialog>
+                                        </td>
+                                    </tr>
+                                ))
+                            )}
+                        </tbody>
+                    </table>
+                </div>
             </div>
         </div>
     );

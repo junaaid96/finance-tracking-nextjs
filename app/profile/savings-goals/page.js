@@ -150,8 +150,8 @@ export default function SavingsGoals() {
                     router.refresh();
                     // router.prefetch("/profile/savings-goals");
                     document
-                    .getElementById(`savings_goal-delete-${id}`)
-                    .close();
+                        .getElementById(`savings_goal-delete-${id}`)
+                        .close();
                     setSuccess("Savings Goal deleted!");
                 })
                 .catch((error) => {
@@ -240,7 +240,7 @@ export default function SavingsGoals() {
                                         type="text"
                                         name="name"
                                         placeholder="Name"
-                                        className="input"
+                                        className="input input-bordered"
                                         required
                                     />
                                 </label>
@@ -250,7 +250,7 @@ export default function SavingsGoals() {
                                         type="number"
                                         name="amount"
                                         placeholder="Amount"
-                                        className="input"
+                                        className="input input-bordered"
                                         required
                                     />
                                 </label>
@@ -259,7 +259,7 @@ export default function SavingsGoals() {
                                     <input
                                         type="date"
                                         name="deadline"
-                                        className="input"
+                                        className="input input-bordered"
                                         placeholder="YYYY-MM-DD"
                                         required
                                     />
@@ -273,184 +273,186 @@ export default function SavingsGoals() {
                         </div>
                     </dialog>
                 </div>
-                <table className="table w-full mt-4">
-                    <thead>
-                        <tr>
-                            <th>id</th>
-                            <th>Name</th>
-                            <th>Amount</th>
-                            <th>Current Amount</th>
-                            <th>Deadline</th>
-                            <th>Action</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {sgLoading ? (
+                <div className="overflow-x-auto">
+                    <table className="table w-full mt-4">
+                        <thead>
                             <tr>
-                                <td colSpan="3">
-                                    <span className="loading loading-lg"></span>
-                                </td>
+                                <th>id</th>
+                                <th>Name</th>
+                                <th>Amount</th>
+                                <th>Current Amount</th>
+                                <th>Deadline</th>
+                                <th>Action</th>
                             </tr>
-                        ) : (
-                            savingsGoals.map((goal) => (
-                                <tr key={goal.id}>
-                                    <td>{goal.id}</td>
-                                    <td>{goal.name}</td>
-                                    <td>${goal.amount}</td>
-                                    <td>${goal.current_amount}</td>
-                                    <td>{goal.deadline}</td>
-                                    <td className="flex gap-2">
-                                        {/* Edit Modal */}
-                                        <button
-                                            className="btn btn-secondary btn-xs"
-                                            onClick={() =>
-                                                document
-                                                    .getElementById(
-                                                        `savings_goal-edit-${goal.id}`
-                                                    )
-                                                    .showModal()
-                                            }
-                                        >
-                                            Edit
-                                        </button>
-                                        <dialog
-                                            id={`savings_goal-edit-${goal.id}`}
-                                            className="modal"
-                                        >
-                                            <div className="modal-box">
-                                                <h3 className="font-bold text-lg">
-                                                    Edit Savings Goal
-                                                </h3>
-                                                <button
-                                                    className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2"
-                                                    onClick={() =>
-                                                        document
-                                                            .getElementById(
-                                                                `savings_goal-edit-${goal.id}`
-                                                            )
-                                                            .close()
-                                                    }
-                                                >
-                                                    ✕
-                                                </button>
-                                                <form
-                                                    method="dialog"
-                                                    onSubmit={(e) =>
-                                                        handleEditSavingsGoal(
-                                                            e,
-                                                            goal.id
-                                                        )
-                                                    }
-                                                >
-                                                    <label className="label">
-                                                        <span className="label-text">
-                                                            Name
-                                                        </span>
-                                                        <input
-                                                            type="text"
-                                                            name="name"
-                                                            placeholder="Name"
-                                                            className="input"
-                                                            defaultValue={
-                                                                goal.name
-                                                            }
-                                                            required
-                                                        />
-                                                    </label>
-                                                    <label className="label">
-                                                        <span className="label-text">
-                                                            Amount
-                                                        </span>
-                                                        <input
-                                                            type="number"
-                                                            name="amount"
-                                                            placeholder="Amount"
-                                                            className="input"
-                                                            defaultValue={
-                                                                goal.amount
-                                                            }
-                                                            required
-                                                        />
-                                                    </label>
-                                                    <label className="label">
-                                                        <span className="label-text">
-                                                            Deadline
-                                                        </span>
-                                                        <input
-                                                            type="date"
-                                                            name="deadline"
-                                                            className="input"
-                                                            placeholder="YYYY-MM-DD"
-                                                            defaultValue={
-                                                                goal.deadline
-                                                            }
-                                                            required
-                                                        />
-                                                    </label>
-                                                    <div className="form-control mt-6">
-                                                        <button className="btn btn-primary">
-                                                            Update
-                                                        </button>
-                                                    </div>
-                                                </form>
-                                            </div>
-                                        </dialog>
-                                        {/* Delete Modal */}
-                                        <button
-                                            className="btn btn-error btn-xs"
-                                            onClick={() =>
-                                                document
-                                                    .getElementById(
-                                                        `savings_goal-delete-${goal.id}`
-                                                    )
-                                                    .showModal()
-                                            }
-                                        >
-                                            Delete
-                                        </button>
-                                        <dialog
-                                            id={`savings_goal-delete-${goal.id}`}
-                                            className="modal"
-                                        >
-                                            <div className="modal-box">
-                                                <form method="dialog"></form>
-                                                <h3 className="font-bold text-lg">
-                                                    Are you sure to delete?
-                                                </h3>
-                                                <div className="form-control mt-6">
-                                                    <div className="flex gap-3 items-center justify-end">
-                                                        <button
-                                                            className="btn btn-primary"
-                                                            onClick={() =>
-                                                                handleDeleteSavingsGoal(
-                                                                    goal.id
-                                                                )
-                                                            }
-                                                        >
-                                                            Yes
-                                                        </button>
-                                                        <button
-                                                            className="btn btn-error"
-                                                            onClick={() =>
-                                                                document
-                                                                    .getElementById(
-                                                                        `savings_goal-delete-${goal.id}`
-                                                                    )
-                                                                    .close()
-                                                            }
-                                                        >
-                                                            No
-                                                        </button>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </dialog>
+                        </thead>
+                        <tbody>
+                            {sgLoading ? (
+                                <tr>
+                                    <td colSpan="3">
+                                        <span className="loading loading-lg"></span>
                                     </td>
                                 </tr>
-                            ))
-                        )}
-                    </tbody>
-                </table>
+                            ) : (
+                                savingsGoals.map((goal) => (
+                                    <tr key={goal.id}>
+                                        <td>{goal.id}</td>
+                                        <td>{goal.name}</td>
+                                        <td>${goal.amount}</td>
+                                        <td>${goal.current_amount}</td>
+                                        <td>{goal.deadline}</td>
+                                        <td className="flex gap-2">
+                                            {/* Edit Modal */}
+                                            <button
+                                                className="btn btn-secondary btn-xs"
+                                                onClick={() =>
+                                                    document
+                                                        .getElementById(
+                                                            `savings_goal-edit-${goal.id}`
+                                                        )
+                                                        .showModal()
+                                                }
+                                            >
+                                                Edit
+                                            </button>
+                                            <dialog
+                                                id={`savings_goal-edit-${goal.id}`}
+                                                className="modal"
+                                            >
+                                                <div className="modal-box">
+                                                    <h3 className="font-bold text-lg">
+                                                        Edit Savings Goal
+                                                    </h3>
+                                                    <button
+                                                        className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2"
+                                                        onClick={() =>
+                                                            document
+                                                                .getElementById(
+                                                                    `savings_goal-edit-${goal.id}`
+                                                                )
+                                                                .close()
+                                                        }
+                                                    >
+                                                        ✕
+                                                    </button>
+                                                    <form
+                                                        method="dialog"
+                                                        onSubmit={(e) =>
+                                                            handleEditSavingsGoal(
+                                                                e,
+                                                                goal.id
+                                                            )
+                                                        }
+                                                    >
+                                                        <label className="label">
+                                                            <span className="label-text">
+                                                                Name
+                                                            </span>
+                                                            <input
+                                                                type="text"
+                                                                name="name"
+                                                                placeholder="Name"
+                                                                className="input input-bordered"
+                                                                defaultValue={
+                                                                    goal.name
+                                                                }
+                                                                required
+                                                            />
+                                                        </label>
+                                                        <label className="label">
+                                                            <span className="label-text">
+                                                                Amount
+                                                            </span>
+                                                            <input
+                                                                type="number"
+                                                                name="amount"
+                                                                placeholder="Amount"
+                                                                className="input input-bordered"
+                                                                defaultValue={
+                                                                    goal.amount
+                                                                }
+                                                                required
+                                                            />
+                                                        </label>
+                                                        <label className="label">
+                                                            <span className="label-text">
+                                                                Deadline
+                                                            </span>
+                                                            <input
+                                                                type="date"
+                                                                name="deadline"
+                                                                className="input input-bordered"
+                                                                placeholder="YYYY-MM-DD"
+                                                                defaultValue={
+                                                                    goal.deadline
+                                                                }
+                                                                required
+                                                            />
+                                                        </label>
+                                                        <div className="form-control mt-6">
+                                                            <button className="btn btn-primary">
+                                                                Update
+                                                            </button>
+                                                        </div>
+                                                    </form>
+                                                </div>
+                                            </dialog>
+                                            {/* Delete Modal */}
+                                            <button
+                                                className="btn btn-error btn-xs"
+                                                onClick={() =>
+                                                    document
+                                                        .getElementById(
+                                                            `savings_goal-delete-${goal.id}`
+                                                        )
+                                                        .showModal()
+                                                }
+                                            >
+                                                Delete
+                                            </button>
+                                            <dialog
+                                                id={`savings_goal-delete-${goal.id}`}
+                                                className="modal"
+                                            >
+                                                <div className="modal-box">
+                                                    <form method="dialog"></form>
+                                                    <h3 className="font-bold text-lg">
+                                                        Are you sure to delete?
+                                                    </h3>
+                                                    <div className="form-control mt-6">
+                                                        <div className="flex gap-3 items-center justify-end">
+                                                            <button
+                                                                className="btn btn-primary"
+                                                                onClick={() =>
+                                                                    handleDeleteSavingsGoal(
+                                                                        goal.id
+                                                                    )
+                                                                }
+                                                            >
+                                                                Yes
+                                                            </button>
+                                                            <button
+                                                                className="btn btn-error"
+                                                                onClick={() =>
+                                                                    document
+                                                                        .getElementById(
+                                                                            `savings_goal-delete-${goal.id}`
+                                                                        )
+                                                                        .close()
+                                                                }
+                                                            >
+                                                                No
+                                                            </button>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </dialog>
+                                        </td>
+                                    </tr>
+                                ))
+                            )}
+                        </tbody>
+                    </table>
+                </div>
             </div>
         </div>
     );

@@ -73,10 +73,10 @@ export default function Expenses() {
                 .post(
                     "https://finance-tracking-drf.onrender.com/expenses/create/",
                     {
-                    category,
-                    amount,
-                    description,
-                    date,
+                        category,
+                        amount,
+                        description,
+                        date,
                     },
                     {
                         headers: {
@@ -113,10 +113,10 @@ export default function Expenses() {
                 .put(
                     `https://finance-tracking-drf.onrender.com/expenses/update/${id}/`,
                     {
-                    category,
-                    amount,
-                    description,
-                    date,
+                        category,
+                        amount,
+                        description,
+                        date,
                     },
                     {
                         headers: {
@@ -289,216 +289,219 @@ export default function Expenses() {
                         </div>
                     </dialog>
                 </div>
-                <table className="table w-full mt-4">
-                    <thead>
-                        <tr>
-                            <th>id</th>
-                            <th>Category</th>
-                            <th>Amount</th>
-                            <th>Description</th>
-                            <th>Date</th>
-                            <th>Action</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {loadingExpenses ? (
+                <div className="overflow-x-auto">
+                    <table className="table w-full mt-4">
+                        <thead>
                             <tr>
-                                <td colSpan="3">
-                                    <span className="loading loading-lg"></span>
-                                </td>
+                                <th>id</th>
+                                <th>Category</th>
+                                <th>Amount</th>
+                                <th>Description</th>
+                                <th>Date</th>
+                                <th>Action</th>
                             </tr>
-                        ) : (
-                            expenses.map((expense) => (
-                                <tr key={expense.id}>
-                                    <td>{expense.id}</td>
-                                    <td>{expense.category}</td>
-                                    <td>${expense.amount}</td>
-                                    <td>{expense.description}</td>
-                                    <td>{expense.date}</td>
-                                    <td className="flex gap-2">
-                                        {/* Edit Modal */}
-                                        <button
-                                            className="btn btn-secondary btn-xs"
-                                            onClick={() =>
-                                                document
-                                                    .getElementById(
-                                                        `expense-edit-${expense.id}`
-                                                    )
-                                                    .showModal()
-                                            }
-                                        >
-                                            Edit
-                                        </button>
-                                        <dialog
-                                            id={`expense-edit-${expense.id}`}
-                                            className="modal"
-                                        >
-                                            <div className="modal-box">
-                                                <h3 className="font-bold text-lg">
-                                                    Edit a expense!
-                                                </h3>
-                                                <button
-                                                    className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2"
-                                                    onClick={() =>
-                                                        document
-                                                            .getElementById(
-                                                                `expense-edit-${expense.id}`
-                                                            )
-                                                            .close()
-                                                    }
-                                                >
-                                                    ✕
-                                                </button>
-                                                <form
-                                                    method="dialog"
-                                                    onSubmit={(e) =>
-                                                        handleEditExpense(
-                                                            e,
-                                                            expense.id
-                                                        )
-                                                    }
-                                                >
-                                                    <label className="label">
-                                                        <span className="label-text">
-                                                            Category
-                                                        </span>
-                                                        <select
-                                                            name="category"
-                                                            className="input input-bordered"
-                                                            required
-                                                        >
-                                                            {categories.map(
-                                                                (category) => (
-                                                                    
-                                                                    <option
-                                                                        selected={
-                                                                            category.name ===
-                                                                            expense.category
-                                                                        }
-                                                                        key={
-                                                                            category.id
-                                                                        }
-                                                                        value={
-                                                                            category.id
-                                                                        }
-                                                                    >
-                                                                        {
-                                                                            category.name
-                                                                        }
-                                                                    </option>
-                                                                )
-                                                            )}
-                                                        </select>
-                                                    </label>
-                                                    <label className="label">
-                                                        <span className="label-text">
-                                                            Amount
-                                                        </span>
-                                                        <input
-                                                            type="number"
-                                                            name="amount"
-                                                            placeholder="Amount"
-                                                            className="input input-bordered"
-                                                            defaultValue={
-                                                                expense.amount
-                                                            }
-                                                            required
-                                                        />
-                                                    </label>
-                                                    <label className="label">
-                                                        <span className="label-text">
-                                                            Description
-                                                        </span>
-                                                        <input
-                                                            type="text"
-                                                            name="description"
-                                                            placeholder="Description"
-                                                            className="input input-bordered"
-                                                            defaultValue={
-                                                                expense.description
-                                                            }
-                                                            required
-                                                        />
-                                                    </label>
-                                                    <label className="label">
-                                                        <span className="label-text">
-                                                            Date
-                                                        </span>
-                                                        <input
-                                                            type="date"
-                                                            name="date"
-                                                            className="input input-bordered"
-                                                            placeholder="YYYY-MM-DD"
-                                                            defaultValue={
-                                                                expense.date
-                                                            }
-                                                            required
-                                                        />
-                                                    </label>
-                                                    <div className="form-control mt-6">
-                                                        <button className="btn btn-primary">
-                                                            Update
-                                                        </button>
-                                                    </div>
-                                                </form>
-                                            </div>
-                                        </dialog>
-                                        {/* Delete Modal */}
-                                        <button
-                                            className="btn btn-error btn-xs"
-                                            onClick={() =>
-                                                document
-                                                    .getElementById(
-                                                        `expense-delete-${expense.id}`
-                                                    )
-                                                    .showModal()
-                                            }
-                                        >
-                                            Delete
-                                        </button>
-                                        <dialog
-                                            id={`expense-delete-${expense.id}`}
-                                            className="modal"
-                                        >
-                                            <div className="modal-box">
-                                                <form method="dialog"></form>
-                                                <h3 className="font-bold text-lg">
-                                                    Are you sure to delete?
-                                                </h3>
-                                                <div className="form-control mt-6">
-                                                    <div className="flex gap-3 items-center justify-end">
-                                                        <button
-                                                            className="btn btn-primary"
-                                                            onClick={() =>
-                                                                handleDeleteExpense(
-                                                                    expense.id
-                                                                )
-                                                            }
-                                                        >
-                                                            Yes
-                                                        </button>
-                                                        <button
-                                                            className="btn btn-error"
-                                                            onClick={() =>
-                                                                document
-                                                                    .getElementById(
-                                                                        `expense-delete-${expense.id}`
-                                                                    )
-                                                                    .close()
-                                                            }
-                                                        >
-                                                            No
-                                                        </button>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </dialog>
+                        </thead>
+                        <tbody>
+                            {loadingExpenses ? (
+                                <tr>
+                                    <td colSpan="3">
+                                        <span className="loading loading-lg"></span>
                                     </td>
                                 </tr>
-                            ))
-                        )}
-                    </tbody>
-                </table>
+                            ) : (
+                                expenses.map((expense) => (
+                                    <tr key={expense.id}>
+                                        <td>{expense.id}</td>
+                                        <td>{expense.category}</td>
+                                        <td>${expense.amount}</td>
+                                        <td>{expense.description}</td>
+                                        <td>{expense.date}</td>
+                                        <td className="flex gap-2">
+                                            {/* Edit Modal */}
+                                            <button
+                                                className="btn btn-secondary btn-xs"
+                                                onClick={() =>
+                                                    document
+                                                        .getElementById(
+                                                            `expense-edit-${expense.id}`
+                                                        )
+                                                        .showModal()
+                                                }
+                                            >
+                                                Edit
+                                            </button>
+                                            <dialog
+                                                id={`expense-edit-${expense.id}`}
+                                                className="modal"
+                                            >
+                                                <div className="modal-box">
+                                                    <h3 className="font-bold text-lg">
+                                                        Edit a expense!
+                                                    </h3>
+                                                    <button
+                                                        className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2"
+                                                        onClick={() =>
+                                                            document
+                                                                .getElementById(
+                                                                    `expense-edit-${expense.id}`
+                                                                )
+                                                                .close()
+                                                        }
+                                                    >
+                                                        ✕
+                                                    </button>
+                                                    <form
+                                                        method="dialog"
+                                                        onSubmit={(e) =>
+                                                            handleEditExpense(
+                                                                e,
+                                                                expense.id
+                                                            )
+                                                        }
+                                                    >
+                                                        <label className="label">
+                                                            <span className="label-text">
+                                                                Category
+                                                            </span>
+                                                            <select
+                                                                name="category"
+                                                                className="input input-bordered"
+                                                                required
+                                                            >
+                                                                {categories.map(
+                                                                    (
+                                                                        category
+                                                                    ) => (
+                                                                        <option
+                                                                            selected={
+                                                                                category.name ===
+                                                                                expense.category
+                                                                            }
+                                                                            key={
+                                                                                category.id
+                                                                            }
+                                                                            value={
+                                                                                category.id
+                                                                            }
+                                                                        >
+                                                                            {
+                                                                                category.name
+                                                                            }
+                                                                        </option>
+                                                                    )
+                                                                )}
+                                                            </select>
+                                                        </label>
+                                                        <label className="label">
+                                                            <span className="label-text">
+                                                                Amount
+                                                            </span>
+                                                            <input
+                                                                type="number"
+                                                                name="amount"
+                                                                placeholder="Amount"
+                                                                className="input input-bordered"
+                                                                defaultValue={
+                                                                    expense.amount
+                                                                }
+                                                                required
+                                                            />
+                                                        </label>
+                                                        <label className="label">
+                                                            <span className="label-text">
+                                                                Description
+                                                            </span>
+                                                            <input
+                                                                type="text"
+                                                                name="description"
+                                                                placeholder="Description"
+                                                                className="input input-bordered"
+                                                                defaultValue={
+                                                                    expense.description
+                                                                }
+                                                                required
+                                                            />
+                                                        </label>
+                                                        <label className="label">
+                                                            <span className="label-text">
+                                                                Date
+                                                            </span>
+                                                            <input
+                                                                type="date"
+                                                                name="date"
+                                                                className="input input-bordered"
+                                                                placeholder="YYYY-MM-DD"
+                                                                defaultValue={
+                                                                    expense.date
+                                                                }
+                                                                required
+                                                            />
+                                                        </label>
+                                                        <div className="form-control mt-6">
+                                                            <button className="btn btn-primary">
+                                                                Update
+                                                            </button>
+                                                        </div>
+                                                    </form>
+                                                </div>
+                                            </dialog>
+                                            {/* Delete Modal */}
+                                            <button
+                                                className="btn btn-error btn-xs"
+                                                onClick={() =>
+                                                    document
+                                                        .getElementById(
+                                                            `expense-delete-${expense.id}`
+                                                        )
+                                                        .showModal()
+                                                }
+                                            >
+                                                Delete
+                                            </button>
+                                            <dialog
+                                                id={`expense-delete-${expense.id}`}
+                                                className="modal"
+                                            >
+                                                <div className="modal-box">
+                                                    <form method="dialog"></form>
+                                                    <h3 className="font-bold text-lg">
+                                                        Are you sure to delete?
+                                                    </h3>
+                                                    <div className="form-control mt-6">
+                                                        <div className="flex gap-3 items-center justify-end">
+                                                            <button
+                                                                className="btn btn-primary"
+                                                                onClick={() =>
+                                                                    handleDeleteExpense(
+                                                                        expense.id
+                                                                    )
+                                                                }
+                                                            >
+                                                                Yes
+                                                            </button>
+                                                            <button
+                                                                className="btn btn-error"
+                                                                onClick={() =>
+                                                                    document
+                                                                        .getElementById(
+                                                                            `expense-delete-${expense.id}`
+                                                                        )
+                                                                        .close()
+                                                                }
+                                                            >
+                                                                No
+                                                            </button>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </dialog>
+                                        </td>
+                                    </tr>
+                                ))
+                            )}
+                        </tbody>
+                    </table>
+                </div>
             </div>
         </div>
     );

@@ -66,7 +66,7 @@ export default function Register() {
 
     return (
         <div className="hero min-h-screen">
-            <div className="hero-content flex-col w-1/3">
+            <div className="hero-content flex-col lg:w-1/3">
                 <div className="text-center">
                     {error && (
                         <div role="alert" className="alert alert-error my-6">
