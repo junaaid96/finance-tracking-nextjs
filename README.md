@@ -10,4 +10,6 @@ Frontend Live Link: https://finance-tracking-nextjs.vercel.app/
   - Savings goals can be set and managed accordingly.
   - All routes are protected; no one can see other details or manipulate them.
 - **Technology Used**:
-  - NextJS
+  - Frontend: Tailwind CSS, JS/React/NextJS
+  - Backend: Python/Django REST framework, JWT Authentication 
+  - Database: PostgreSQL
