@@ -5,6 +5,8 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useState, useEffect } from "react";
 import { useUser } from "@/app/layout";
+import Image from "next/image";
+import RegisterSVG from "@/app/assets/personal-finance-animate.svg";
 
 export default function Register() {
     const router = useRouter();
@@ -29,6 +31,9 @@ export default function Register() {
     }, [loggedIn, router]);
 
     async function handleRegister(e) {
+        // Scroll to the top of the page
+        window.scrollTo({ top: 0, behavior: "smooth" });
+
         e.preventDefault();
         const form = e.target;
         const formData = new FormData(form);
@@ -82,180 +87,237 @@ export default function Register() {
     }
 
     return (
-        <div className="hero min-h-screen">
-            <div className="hero-content flex-col lg:w-1/3">
-                <div className="text-center">
-                    {error && (
-                        <div role="alert" className="alert alert-error my-6">
-                            <svg
-                                xmlns="http://www.w3.org/2000/svg"
-                                className="stroke-current shrink-0 h-6 w-6"
-                                fill="none"
-                                viewBox="0 0 24 24"
-                            >
-                                <path
-                                    strokeLinecap="round"
-                                    strokeLinejoin="round"
-                                    strokeWidth="2"
-                                    d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z"
-                                />
-                            </svg>
-                            <span>{error}</span>
-                        </div>
-                    )}
-                    {success && (
-                        <div role="alert" className="alert alert-success my-6">
-                            <svg
-                                xmlns="http://www.w3.org/2000/svg"
-                                className="stroke-current shrink-0 h-6 w-6"
-                                fill="none"
-                                viewBox="0 0 24 24"
-                            >
-                                <path
-                                    strokeLinecap="round"
-                                    strokeLinejoin="round"
-                                    strokeWidth="2"
-                                    d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"
-                                />
-                            </svg>
-                            <span>{success}</span>
-                        </div>
-                    )}
-                    <h2 className="text-2xl font-semibold">Register</h2>
-                    <p className="py-3">
-                        Enter your information below to create your account
-                    </p>
+        <>
+            <header>
+                <div className="navbar bg-primary text-primary-content mb-8">
+                    <button className="btn btn-ghost text-xl">
+                        Finance Tracking
+                    </button>
                 </div>
-                <div className="card shrink-0 w-full  shadow-2xl bg-base-100">
-                    <form className="card-body" onSubmit={handleRegister}>
-                        <div className="form-control">
-                            <label className="label" htmlFor="username">
-                                <span className="label-text">Username</span>
-                            </label>
-                            <input
-                                type="text"
-                                id="username"
-                                name="username"
-                                placeholder="Username"
-                                className="input input-bordered input-primary"
-                                required
-                                aria-label="Username"
-                            />
+            </header>
+            <div className="flex flex-wrap gap-6 justify-evenly items-center min-h-screen">
+                <div className="hero w-fit">
+                    <div className="hero-content flex-col">
+                        <div className="text-center">
+                            {error && (
+                                <div
+                                    role="alert"
+                                    className="alert alert-error my-6"
+                                >
+                                    <svg
+                                        xmlns="http://www.w3.org/2000/svg"
+                                        className="stroke-current shrink-0 h-6 w-6"
+                                        fill="none"
+                                        viewBox="0 0 24 24"
+                                    >
+                                        <path
+                                            strokeLinecap="round"
+                                            strokeLinejoin="round"
+                                            strokeWidth="2"
+                                            d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z"
+                                        />
+                                    </svg>
+                                    <span>{error}</span>
+                                </div>
+                            )}
+                            {success && (
+                                <div
+                                    role="alert"
+                                    className="alert alert-success my-6"
+                                >
+                                    <svg
+                                        xmlns="http://www.w3.org/2000/svg"
+                                        className="stroke-current shrink-0 h-6 w-6"
+                                        fill="none"
+                                        viewBox="0 0 24 24"
+                                    >
+                                        <path
+                                            strokeLinecap="round"
+                                            strokeLinejoin="round"
+                                            strokeWidth="2"
+                                            d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"
+                                        />
+                                    </svg>
+                                    <span>{success}</span>
+                                </div>
+                            )}
+                            <h2 className="text-2xl font-semibold">Register</h2>
+                            <p className="py-3">
+                                Enter your information below to create your
+                                account
+                            </p>
                         </div>
-                        <div className="form-control">
-                            <label className="label" htmlFor="first_name">
-                                <span className="label-text">First Name</span>
-                            </label>
-                            <input
-                                type="text"
-                                id="first_name"
-                                name="first_name"
-                                placeholder="First Name"
-                                className="input input-bordered input-primary"
-                                required
-                                aria-label="First Name"
-                            />
+                        <div className="card shrink-0 w-full  shadow-2xl bg-base-100">
+                            <form
+                                className="card-body"
+                                onSubmit={handleRegister}
+                            >
+                                <div className="form-control">
+                                    <label className="label" htmlFor="username">
+                                        <span className="label-text">
+                                            Username
+                                        </span>
+                                    </label>
+                                    <input
+                                        type="text"
+                                        id="username"
+                                        name="username"
+                                        placeholder="Username"
+                                        className="input input-bordered input-primary"
+                                        required
+                                        aria-label="Username"
+                                    />
+                                </div>
+                                <div className="lg:flex flex-wrap gap-6">
+                                    <div className="form-control">
+                                        <label
+                                            className="label"
+                                            htmlFor="first_name"
+                                        >
+                                            <span className="label-text">
+                                                First Name
+                                            </span>
+                                        </label>
+                                        <input
+                                            type="text"
+                                            id="first_name"
+                                            name="first_name"
+                                            placeholder="First Name"
+                                            className="input input-bordered input-primary"
+                                            required
+                                            aria-label="First Name"
+                                        />
+                                    </div>
+                                    <div className="form-control">
+                                        <label
+                                            className="label"
+                                            htmlFor="last_name"
+                                        >
+                                            <span className="label-text">
+                                                Last Name
+                                            </span>
+                                        </label>
+                                        <input
+                                            type="text"
+                                            id="last_name"
+                                            name="last_name"
+                                            placeholder="Last Name"
+                                            className="input input-bordered input-primary"
+                                            required
+                                            aria-label="Last Name"
+                                        />
+                                    </div>
+                                </div>
+                                <div className="form-control">
+                                    <label className="label" htmlFor="email">
+                                        <span className="label-text">
+                                            Email
+                                        </span>
+                                    </label>
+                                    <input
+                                        type="email"
+                                        id="email"
+                                        name="email"
+                                        placeholder="Email"
+                                        className="input input-bordered input-primary"
+                                        required
+                                        aria-label="Email"
+                                    />
+                                </div>
+                                <div className="lg:flex flex-wrap gap-6">
+                                    <div className="form-control">
+                                        <label
+                                            className="label"
+                                            htmlFor="password"
+                                        >
+                                            <span className="label-text">
+                                                Password
+                                            </span>
+                                        </label>
+                                        <input
+                                            type="password"
+                                            id="password"
+                                            name="password"
+                                            placeholder="Password"
+                                            className="input input-bordered input-primary"
+                                            required
+                                            aria-label="Password"
+                                        />
+                                    </div>
+                                    <div className="form-control">
+                                        <label
+                                            className="label"
+                                            htmlFor="confirm_password"
+                                        >
+                                            <span className="label-text">
+                                                Confirm Password
+                                            </span>
+                                        </label>
+                                        <input
+                                            type="password"
+                                            id="confirm_password"
+                                            name="confirm_password"
+                                            placeholder="Confirm Password"
+                                            className="input input-bordered input-primary"
+                                            required
+                                            aria-label="Confirm Password"
+                                        />
+                                    </div>
+                                </div>
+                                <div className="form-control">
+                                    <label
+                                        className="label"
+                                        htmlFor="phone_number"
+                                    >
+                                        <span className="label-text">
+                                            Phone Number
+                                        </span>
+                                    </label>
+                                    <input
+                                        type="tel"
+                                        id="phone_number"
+                                        name="phone_number"
+                                        placeholder="Phone Number"
+                                        className="input input-bordered input-primary"
+                                        required
+                                        aria-label="Phone Number"
+                                    />
+                                </div>
+                                <div className="form-control">
+                                    <label className="label" htmlFor="address">
+                                        <span className="label-text">
+                                            Address
+                                        </span>
+                                    </label>
+                                    <input
+                                        type="text"
+                                        id="address"
+                                        name="address"
+                                        placeholder="Address"
+                                        className="input input-bordered input-primary"
+                                        required
+                                        aria-label="Address"
+                                    />
+                                </div>
+                                <div className="form-control mt-6">
+                                    <button className="btn btn-primary">
+                                        Register
+                                    </button>
+                                </div>
+                                <p>
+                                    Already have an account? Please{" "}
+                                    <Link href={"/"}>
+                                        <span className="text-primary">
+                                            login.
+                                        </span>
+                                    </Link>
+                                </p>
+                            </form>
                         </div>
-                        <div className="form-control">
-                            <label className="label" htmlFor="last_name">
-                                <span className="label-text">Last Name</span>
-                            </label>
-                            <input
-                                type="text"
-                                id="last_name"
-                                name="last_name"
-                                placeholder="Last Name"
-                                className="input input-bordered input-primary"
-                                required
-                                aria-label="Last Name"
-                            />
-                        </div>
-                        <div className="form-control">
-                            <label className="label" htmlFor="email">
-                                <span className="label-text">Email</span>
-                            </label>
-                            <input
-                                type="email"
-                                id="email"
-                                name="email"
-                                placeholder="Email"
-                                className="input input-bordered input-primary"
-                                required
-                                aria-label="Email"
-                            />
-                        </div>
-                        <div className="form-control">
-                            <label className="label" htmlFor="password">
-                                <span className="label-text">Password</span>
-                            </label>
-                            <input
-                                type="password"
-                                id="password"
-                                name="password"
-                                placeholder="Password"
-                                className="input input-bordered input-primary"
-                                required
-                                aria-label="Password"
-                            />
-                        </div>
-                        <div className="form-control">
-                            <label className="label" htmlFor="confirm_password">
-                                <span className="label-text">
-                                    Confirm Password
-                                </span>
-                            </label>
-                            <input
-                                type="password"
-                                id="confirm_password"
-                                name="confirm_password"
-                                placeholder="Confirm Password"
-                                className="input input-bordered input-primary"
-                                required
-                                aria-label="Confirm Password"
-                            />
-                        </div>
-                        <div className="form-control">
-                            <label className="label" htmlFor="phone_number">
-                                <span className="label-text">Phone Number</span>
-                            </label>
-                            <input
-                                type="tel"
-                                id="phone_number"
-                                name="phone_number"
-                                placeholder="Phone Number"
-                                className="input input-bordered input-primary"
-                                required
-                                aria-label="Phone Number"
-                            />
-                        </div>
-                        <div className="form-control">
-                            <label className="label" htmlFor="address">
-                                <span className="label-text">Address</span>
-                            </label>
-                            <input
-                                type="text"
-                                id="address"
-                                name="address"
-                                placeholder="Address"
-                                className="input input-bordered input-primary"
-                                required
-                                aria-label="Address"
-                            />
-                        </div>
-                        <div className="form-control mt-6">
-                            <button className="btn btn-primary">
-                                Register
-                            </button>
-                        </div>
-                        <p>
-                            Already have an account? Please{" "}
-                            <Link href={"/login"}>
-                                <span className="text-primary">login</span>
-                            </Link>
-                        </p>
-                    </form>
+                    </div>
                 </div>
+                <Image priority src={RegisterSVG} alt="register-svg" />
             </div>
-        </div>
+        </>
     );
 }

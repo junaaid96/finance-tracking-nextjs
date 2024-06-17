@@ -1,27 +1,23 @@
 import Link from "next/link";
 import Features from "./components/Features";
+import Login from "./login/page";
+import Image from "next/image";
+import LoginSVG from "@/app/assets/money-stress-animate.svg";
 
 export default function Home() {
     return (
-        <main>
-            <div className="hero min-h-screen bg-base-200">
-                <div className="hero-content text-center">
-                    <div className="max-w-md">
-                        <h1 className="text-5xl font-bold">Finance Tracking</h1>
-                        <p className="py-6">
-                            Personal Finance Management System. Here you can
-                            track your incomes, expenses, manage savings
-                            goals and check your transactions histories.
-                        </p>
-                        <Link href={"/login"}>
-                            <button className="btn btn-primary">
-                                Get Started
-                            </button>
-                        </Link>
-                    </div>
+        <>
+            <header>
+                <div className="navbar bg-primary text-primary-content max-sm:mb-8">
+                    <button className="btn btn-ghost text-xl">
+                        Finance Tracking
+                    </button>
                 </div>
-            </div>
-            <Features />
-        </main>
+            </header>
+            <main className="flex flex-wrap gap-6 justify-evenly items-center min-h-screen">
+                <Login />
+                <Image priority src={LoginSVG} alt="login-svg" />
+            </main>
+        </>
     );
 }

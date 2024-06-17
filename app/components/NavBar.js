@@ -24,10 +24,14 @@ export default function NavBar() {
     ) : (
         <div className="navbar bg-base-300">
             <div className="flex-1">
-                <Link href={'/'} className="btn btn-ghost text-xl">Finance Tracking</Link>
+                <Link href={"/"} className="btn btn-ghost text-xl">
+                    Finance Tracking
+                </Link>
             </div>
             <div className="flex-none">
-                <div className="dropdown dropdown-end">{user.first_name} {user.last_name}</div>
+                <div className="dropdown dropdown-end hidden lg:block">
+                    {user.first_name} {user.last_name}
+                </div>
                 <div className="dropdown dropdown-end">
                     <div
                         tabIndex={0}
@@ -46,10 +50,20 @@ export default function NavBar() {
                     </div>
                     <ul
                         tabIndex={0}
-                        className="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-base-100 rounded-box w-52"
+                        className="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-base-300 rounded-box w-52"
                     >
+                        <li className="lg:hidden">
+                            <p>
+                                {user.first_name} {user.last_name}
+                            </p>
+                        </li>
                         <li>
-                            <button onClick={handleLogout}>Logout</button>
+                            <button
+                                className="btn btn-primary btn-sm btn-outline mt-3"
+                                onClick={handleLogout}
+                            >
+                                Logout
+                            </button>
                         </li>
                     </ul>
                 </div>

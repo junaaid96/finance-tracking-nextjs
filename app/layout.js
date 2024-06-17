@@ -65,7 +65,7 @@ export default function RootLayout({ children }) {
             <html lang="en" data-theme="halloween">
                 <body className={inter.className}>
                     {children}
-                    <Footer />
+                    {/* <Footer /> */}
                 </body>
             </html>
         </UserContext.Provider>

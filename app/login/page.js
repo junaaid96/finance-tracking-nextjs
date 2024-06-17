@@ -69,8 +69,8 @@ export default function Login() {
     }
 
     return (
-        <div className="hero min-h-screen">
-            <div className="hero-content flex-col lg:w-1/3">
+        <div className="hero w-fit">
+            <div className="hero-content flex-col">
                 <div className="text-center">
                     {loginLoading && (
                         <>
@@ -101,7 +101,7 @@ export default function Login() {
                         Enter your email to sign in to your account!
                     </p>
                 </div>
-                <div className="card shrink-0 lg:w-full shadow-2xl bg-base-100">
+                <div className="card shrink-0 w-full shadow-2xl bg-base-100">
                     <form className="card-body" onSubmit={handleLogin}>
                         <div className="form-control">
                             <label className="label" htmlFor="username">
@@ -146,7 +146,7 @@ export default function Login() {
                     <div className="text-center p-6">
                         Don't have an account? Please{" "}
                         <Link href={"/register"}>
-                            <span className="text-primary">register</span>
+                            <span className="text-primary">register.</span>
                         </Link>
                     </div>
                 </div>
