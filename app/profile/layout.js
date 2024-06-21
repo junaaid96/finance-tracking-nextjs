@@ -10,7 +10,7 @@ export default function ProfileLayout({ children }) {
     return (
         <>
             <NavBar />
-            <div className="flex flex-wrap justify-center">
+            <div className="flex flex-wrap justify-center items-center">
                 <SideBar />
                 {children}
             </div>

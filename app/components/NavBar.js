@@ -22,7 +22,7 @@ export default function NavBar() {
     return loading ? (
         <span className="loading loading-ring loading-lg"></span>
     ) : (
-        <div className="navbar bg-base-300">
+        <div className="navbar bg-primary text-primary-content">
             <div className="flex-1">
                 <Link href={"/"} className="btn btn-ghost text-xl">
                     Finance Tracking
@@ -50,10 +50,10 @@ export default function NavBar() {
                     </div>
                     <ul
                         tabIndex={0}
-                        className="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-base-300 rounded-box w-52"
+                        className="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow border border-black rounded-box w-52 bg-base-300"
                     >
                         <li className="lg:hidden">
-                            <p>
+                            <p className="text-gray-300">
                                 {user.first_name} {user.last_name}
                             </p>
                         </li>

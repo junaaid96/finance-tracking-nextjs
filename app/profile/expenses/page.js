@@ -195,7 +195,7 @@ export default function Expenses() {
         <span className="loading loading-ring loading-lg"></span>
     ) : (
         <div className="min-h-screen py-20 w-96 lg:w-2/3">
-            <div className="flex flex-col max-w-4xl w-full mx-auto p-8 bg-base-200 rounded-2xl shadow-lg">
+            <div className="flex flex-col max-w-4xl w-full mx-auto p-8 bg-base-200 rounded-2xl shadow-lg h-screen">
                 {error && (
                     <div role="alert" className="alert alert-error my-6">
                         <svg
